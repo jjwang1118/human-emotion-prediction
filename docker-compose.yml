@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  # 训练服务
+  train:
+    build: .
+    image: emotion-recognition:latest
+    container_name: emotion-train
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - CUDA_VISIBLE_DEVICES=0
+    volumes:
+      - ./datasets:/app/datasets
+      - ./model:/app/model
+      - ./runs:/app/runs
+      - ./config.yaml:/app/config.yaml
+    command: python train.py
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  # 评估服务
+  eval:
+    image: emotion-recognition:latest
+    container_name: emotion-eval
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - CUDA_VISIBLE_DEVICES=0
+    volumes:
+      - ./datasets:/app/datasets
+      - ./model:/app/model
+      - ./config.yaml:/app/config.yaml
+    command: python eval.py
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  # TensorBoard 服务
+  tensorboard:
+    image: emotion-recognition:latest
+    container_name: emotion-tensorboard
+    ports:
+      - "6006:6006"
+    volumes:
+      - ./runs:/app/runs
+    command: tensorboard --logdir=/app/runs --host=0.0.0.0 --port=6006
+    
+  # 可视化服务
+  visualize:
+    image: emotion-recognition:latest
+    container_name: emotion-visualize
+    volumes:
+      - ./model:/app/model
+      - ./config.yaml:/app/config.yaml
+    command: python visualize.py
+
+  # 测试配置服务
+  test-config:
+    image: emotion-recognition:latest
+    container_name: emotion-test-config
+    volumes:
+      - ./config.yaml:/app/config.yaml
+    command: python test_config.py

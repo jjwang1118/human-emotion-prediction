@@ -1,0 +1,60 @@
+# 實驗配置
+experiment:
+  name: "baseline"  # 實驗名稱，記錄時會以 exp_{name} 儲存
+
+# 模型配置
+model:
+  input_channels: 1
+  num_classes: 7
+  dropout_rate: 0.5
+  device: "cuda"
+
+# 数据集配置
+dataset:
+  root_path: "datasets/fer2013"
+  val_split: 0.2  # 验证集比例
+
+# 训练配置
+training:
+  batch_size: 64
+  epochs: 200
+  learning_rate: 0.001
+  weight_decay: 1e-4
+  
+  # 早停配置
+  early_stopping:
+    patience: 20
+  
+  # 学习率调度器配置
+  scheduler:
+    mode: "max"
+    factor: 0.5
+    patience: 10
+  
+  # 检查点保存频率
+  checkpoint_interval: 50
+
+# 数据增强配置
+data_augmentation:
+  train:
+    random_horizontal_flip: 0.5
+    random_affine:
+      degrees: 15
+      translate: [0.2, 0.2]
+      scale: [0.8, 1.2]
+    random_rotation: 10
+    color_jitter:
+      brightness: 0.2
+      contrast: 0.2
+
+# 路径配置
+paths:
+  model_save_dir: "model"
+  best_model: "model/best_model.pth"
+  final_model: "model/final_model.pth"
+  training_history: "model/training_history.json"
+  tensorboard_logs: "runs"
+
+# 评估配置
+evaluation:
+  batch_size: 64

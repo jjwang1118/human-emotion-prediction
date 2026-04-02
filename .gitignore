@@ -1,0 +1,20 @@
+﻿# 資料集圖片
+datasets/*/*/*.jpg
+datasets/*/*/*.jpeg
+datasets/*/*/*.png
+
+# 模型權重與訓練歷史
+model/*.pth
+model/*.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# 實驗記錄
+record.csv
+
+# TensorBoard logs
+runs/

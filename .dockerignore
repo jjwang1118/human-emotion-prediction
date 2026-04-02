@@ -1,0 +1,61 @@
+# Python 缓存
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# 虚拟环境
+venv/
+env/
+ENV/
+.venv
+
+# 训练输出（不打包已训练的模型到镜像中）
+model/*.pth
+model/*.json
+runs/
+
+# 数据集（通过卷挂载，不打包到镜像）
+datasets/
+filter_data/
+
+# IDE 和编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# 文档（可选，如果想减小镜像大小）
+*.md
+README.md
+CONFIG_README.md
+DOCKER_README.md
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 日志文件
+*.log
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb
+
+# 测试和临时文件
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/

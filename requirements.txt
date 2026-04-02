@@ -1,0 +1,19 @@
+# PyTorch 深度學習框架
+torch>=2.0.0
+torchvision>=0.15.0
+
+# 配置文件解析
+pyyaml>=6.0
+
+# 數據處理
+pandas>=1.5.0
+numpy>=1.24.0
+
+# 可視化
+matplotlib>=3.7.0
+
+# TensorBoard (用於訓練可視化)
+tensorboard>=2.13.0
+
+# 圖像處理
+Pillow>=9.5.0
